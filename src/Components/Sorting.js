@@ -10,6 +10,7 @@ export default function Sorting() {
         Setslider(event.target.value)
         console.log(slider)
     }
+    
 
     useEffect(()=>{
         const button=document.querySelector('#btn')
