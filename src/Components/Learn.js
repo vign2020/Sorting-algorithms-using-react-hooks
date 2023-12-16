@@ -2,8 +2,10 @@
 
 import React, { useState,useEffect } from 'react'
 import '../App.css'
+import Sorting from './Sorting';
 
 export default function Learn(props) {
+
 
 
   const [numbers, setNumbers] = useState([]);
@@ -17,6 +19,7 @@ export default function Learn(props) {
 let arr=[]
 
 
+//to handle the slider 
   useEffect(()=>{
 
 
@@ -32,11 +35,13 @@ let arr=[]
 },[props.slider])
 
   
+//the algorithm itself
   useEffect(() => {
 
 if(props.submit===true){
 
   console.log(currentIndex)
+
       const interval = setInterval(() => {
 
       
@@ -68,12 +73,14 @@ if(props.submit===true){
           setCurrentIndex(0)
           setCurrentIndexOuter(0)
           props.Setsubmit(false)
+          props.SetSorted(true)
         }
-      }, 0.5);
+      }, props.sliderSpeed);
 
       
     return () => {
       clearInterval(interval);
+  
     };
 
 }
@@ -81,11 +88,14 @@ if(props.submit===true){
   }, [numbers,currentIndex,currentIndexOuter,props.submit]);
 
   return (
+    <>
+   
 
     <div className="bars-container">
      
 
-    {numbers.map((value, index) => {
+    {
+    numbers.map((value, index) => {
       const barHeight = (value / maxArrayValue) * maxBarHeight; // Calculate the height of the bar
 
       return (
@@ -93,13 +103,23 @@ if(props.submit===true){
           key={index}
           className="bar"
 
-          style={{ height: `${barHeight}px` }}
+          style={{ 
+            height: `${barHeight}px`, 
+            backgroundColor : numbers[currentIndex] === value ? 'blue' : numbers[currentIndexOuter] === value ? 'red': ''
+          }}
         ></div>
       );
-    })}
+
+    })
+
+    }
+    
 
 
   </div>
+  <h1>ith value is {currentIndex} jth value is {currentIndexOuter}</h1>
+  
+  </>
 
   )
 }
